@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="589.0" prefWidth="1061.0" stylesheets="@line.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ChartController">
+   <children>
+      <LineChart fx:id="lineChart" layoutX="26.0" layoutY="16.0" prefHeight="465.0" prefWidth="1012.0">
+        <xAxis>
+          <NumberAxis label="x" side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" label="u(x, t)" lowerBound="-2.0" side="LEFT" upperBound="2.0" />
+        </yAxis>
+      </LineChart>
+      <Slider fx:id="timeSlider" layoutX="43.0" layoutY="491.0" majorTickUnit="5.0" max="40.0" minorTickCount="4" prefHeight="52.0" prefWidth="977.0" showTickLabels="true" showTickMarks="true" />
+      <Label fx:id="timeLabel" layoutX="518.0" layoutY="543.0" text="t = 0" />
+   </children>
+</AnchorPane>

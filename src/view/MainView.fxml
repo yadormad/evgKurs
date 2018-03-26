@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="337.0" prefWidth="461.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainViewController">
+   <children>
+      <GridPane layoutX="14.0" layoutY="14.0" prefHeight="278.0" prefWidth="431.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="227.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="204.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="l" text="30" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+             <TextField fx:id="D" text="0.1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+             <TextField fx:id="T" text="10" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+             <TextField fx:id="N" text="1000" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+             <TextField fx:id="xStep" text="0.1" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+             <TextField fx:id="tStep" text="0.25" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Длина трубки l = " GridPane.rowIndex="0" />
+             <Label text="Коэффициент пропорциональности D = " GridPane.rowIndex="1" />
+             <Label text="Время T = " GridPane.rowIndex="2" />
+             <Label text="Количество членов ряда T = " GridPane.rowIndex="3" />
+             <Label text="Шаг по x = " GridPane.rowIndex="4" />
+             <Label text="Шаг по t = " GridPane.rowIndex="5" />
+         </children>
+      </GridPane>
+      <Button layoutX="207.0" layoutY="298.0" mnemonicParsing="false" onAction="#buildChart" text="Построить" />
+   </children>
+</AnchorPane>
