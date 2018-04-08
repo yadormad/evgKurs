@@ -37,13 +37,15 @@ public class ChartController {
         lineChart.setLegendSide(Side.TOP);
         timeSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                int i = (int) Math.round((double)newValue*chartCreator.getNt()/chartCreator.getTime());
-                timeLabel.setText("t = " + i*chartCreator.getTime()/chartCreator.getNt());
-                for(int j = 0; j <= chartCreator.getNx(); j++) {
-                    double separValue = chartSeparArray[j][i];
+                int i = (int) Math.round((double)newValue*chartCreator.getTn()/chartCreator.getTime());
+                timeLabel.setText("t = " + i*chartCreator.getTime()/chartCreator.getTn());
+                for(int j = 0; j <= chartCreator.getXn(); j++) {
                     double runValue = chartRunArray[j][i];
-                    dataSepar.get(j).setYValue(separValue);
                     dataRun.get(j).setYValue(runValue);
+                }
+                for(int j = 0; j <= 300; j++) {
+                    double separValue = chartSeparArray[j][i];
+                    dataSepar.get(j).setYValue(separValue);
                 }
             }
         });
@@ -71,13 +73,17 @@ public class ChartController {
 
     private void createChart(){
         double length = chartCreator.getLength();
-        double xStep = length/chartCreator.getNx();
-        for(int j = 0; j <= chartCreator.getNx(); j++) {
-            double separValue = chartSeparArray[j][0];
+        double xStep = length/chartCreator.getXn();
+
+        for(int j = 0; j <= chartCreator.getXn(); j++) {
             double runValue = chartRunArray[j][0];
             double x = j*xStep;
-            dataSepar.add(new XYChart.Data<Number, Number>(x, separValue));
             dataRun.add(new XYChart.Data<Number, Number>(x, runValue));
+        }
+        for(int j = 0; j <= 300; j++) {
+            double separValue = chartSeparArray[j][0];
+            double x = j*length/300;
+            dataSepar.add(new XYChart.Data<Number, Number>(x, separValue));
         }
         seriesSepar.setName("Separ");
         seriesRun.setName("Run");
@@ -99,9 +105,9 @@ public class ChartController {
         Node lineRun = seriesRun.getNode().lookup(".chart-series-line");
         color = Color.BLACK;
         rgb = String.format("%d, %d, %d",
-                (color.getRed() * 255),
-                (color.getGreen() * 255),
-                (color.getBlue() * 255));
+                (color.getRed() * 255)-30,
+                (color.getGreen() * 255)-30,
+                (color.getBlue() * 255)-30);
         lineRun.setStyle("-fx-stroke: rgba(" + rgb + ", 1.0);");
         timeLabel.setText("t = 0");
     }

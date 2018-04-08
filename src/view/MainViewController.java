@@ -14,9 +14,8 @@ public class MainViewController {
     public TextField l;
     public TextField D;
     public TextField T;
-    public TextField N;
-    public TextField xStep;
-    public TextField tStep;
+    public TextField xn;
+    public TextField tn;
     private Main main;
 
     @FXML
@@ -28,7 +27,7 @@ public class MainViewController {
 
     public void buildChart(ActionEvent actionEvent) throws IOException, SQLException {
         ChartCreator chartCreator = new ChartCreator(Double.parseDouble(l.getText()),
-                Double.parseDouble(D.getText()), Double.parseDouble(T.getText()), Integer.parseInt(N.getText()), Double.parseDouble(xStep.getText()), Double.parseDouble(tStep.getText()));
+                Double.parseDouble(D.getText()), Double.parseDouble(T.getText()), 1000, Integer.parseInt(xn.getText()), Integer.parseInt(tn.getText()));
         main.initChartForm();
         main.setChartCreator(chartCreator);
     }

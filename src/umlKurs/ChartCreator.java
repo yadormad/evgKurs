@@ -2,18 +2,17 @@ package umlKurs;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.lang.Math.*;
 
 public class ChartCreator {
-    double length, D, time;
-    int nt, nx, nSum;
-    double[] lamdas;
-    double H = 0.005;
+    private double length, D, time;
+    private int tn, xn, nSum;
+    private double[] lamdas;
+    private static final double H = 0.005;
 
-    public ChartCreator(double length, double d, double time, int N, double xStep, double tStep) {
+    public ChartCreator(double length, double d, double time, int N, int xn, int tn) {
         Scanner scanner = null;
         try {
             scanner = new Scanner(new File("lamdas.txt"));
@@ -23,12 +22,13 @@ public class ChartCreator {
         this.length = length;
         D = d;
         this.time = time;
-        this.nt = (int) (time/tStep);
-        this.nx = (int) (length/xStep);
+        this.tn = tn;
+        this.xn = xn;
         this.nSum = N;
         lamdas = new double[nSum];
         for(int i = 0; i < nSum; i++){
             //String string = scanner.nextLine();
+            assert scanner != null;
             lamdas[i] = Double.parseDouble(scanner.nextLine());
         }
     }
@@ -42,12 +42,12 @@ public class ChartCreator {
         return time;
     }
 
-    public int getNt() {
-        return nt;
+    public int getTn() {
+        return tn;
     }
 
-    public int getNx() {
-        return nx;
+    public int getXn() {
+        return xn;
     }
 
     public int getnSum() {
@@ -87,15 +87,16 @@ public class ChartCreator {
     }
 
     public double[][] composeSeparChartArray(){
-        double[][] result = new double[nx+1][nt+1];
-        for(int i = 0; i <= nx; i++) {
-            for (int j = 0; j <= nt; j++) {
-                result[i][j] = getSum(length*i/nx, time*j/nt) + 0.5;
+        int xnSepar = 300;
+        double[][] result = new double[xnSepar +1][tn +1];
+        for(int i = 0; i <= xnSepar; i++) {
+            for (int j = 0; j <= tn; j++) {
+                result[i][j] = getSum(length*i/ xnSepar, time*j/ tn) + 0.5;
             }
         }
-        /*for (int j = 0; j <= nt; j++) {
-            result[0][j] = exp(-gammaK*time*j/nt);
-            result[nx][j] = result[0][j];
+        /*for (int j = 0; j <= tn; j++) {
+            result[0][j] = exp(-gammaK*time*j/tn);
+            result[xn][j] = result[0][j];
         }*/
         return result;
     }
@@ -152,41 +153,41 @@ public class ChartCreator {
 
     private double[] getNextKStep(double[] q, int k, double gam, double r, double p, double p0, double r0, double pI) {
         double[] nextCol = new double[q.length];
-        double[] alf = new double[nx + 1];
-        double[] bet = new double[nx + 1];
+        double[] alf = new double[xn + 1];
+        double[] bet = new double[xn + 1];
         alf[1] = -r0/p0;
         bet[1] = q[0]/p0;
-        for (int j = 2; j <= nx; j++) {
+        for (int j = 2; j <= xn; j++) {
             alf[j] = -r/(p + r*alf[j-1]);
             bet[j] = (q[j-1] - r*bet[j-1])/(p + r*alf[j-1]);
         }
-        nextCol[nx] = (q[nx] - r*bet[nx])/(pI + r0*alf[nx]);
-        for (int m = nx - 1; m >= 0; m--) {
+        nextCol[xn] = (q[xn] - r*bet[xn])/(pI + r0*alf[xn]);
+        for (int m = xn - 1; m >= 0; m--) {
             nextCol[m] = alf[m+1]*nextCol[m+1] + bet[m+1];
         }
         return nextCol;
     }
 
     public double[][] composeRunChartArray(){
-        double[][] result = new double[nx+1][nt+1];
-        double[] q = new double [nx + 1];
-        double gam = (time/nt)/(Math.pow(length/nx, 2.0));
+        double[][] result = new double[xn +1][tn +1];
+        double[] q = new double [xn + 1];
+        double gam = (time/ tn)/(Math.pow(length/ xn, 2.0));
         double r = -D*gam;
         double p = 2*gam*D + 1;
         double p0 = 2*gam*D + 1;
         double r0 = 2*r;
-        double  pI = p + 2*H*length/nx*(-r);
-        for(int i = 0; i <= nx/2; i++) {
+        double  pI = p + 2*H*length/ xn *(-r);
+        for(int i = 0; i <= xn /2; i++) {
             result[i][0] = 1;
             q[i] = 1;
         }
-        for(int i = nx/2 + 1; i <= nx; i++) {
+        for(int i = xn /2 + 1; i <= xn; i++) {
             result[i][0] = 0;
             q[i] = 0;
         }
-        for(int k = 0; k < nt; k++) {
+        for(int k = 0; k < tn; k++) {
             q = getNextKStep(q, k, gam, r, p, p0, r0, pI);
-            for(int i = 0; i <= nx; i++) {
+            for(int i = 0; i <= xn; i++) {
                 result[i][k+1] = q[i];
             }
         }
